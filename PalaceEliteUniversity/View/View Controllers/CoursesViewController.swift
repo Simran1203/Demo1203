@@ -209,6 +209,7 @@ class CoursesViewController: UIViewController,UITableViewDelegate,UITableViewDat
             tableView.isHidden = false
             collectionView.isHidden = true
         }
+            
         else if selectedView == "Table"{
             
             selectedView = "Grid"
@@ -269,12 +270,10 @@ class CoursesViewController: UIViewController,UITableViewDelegate,UITableViewDat
             
         case .NAME:
             arrFilteredCourses = arrCourses
-            
             break
             
         case .DATE:
             arrFilteredCourses = arrCourses.sorted(by: {$0.enrolledOnTime.compare($1.enrolledOnTime) == .orderedAscending})
-            
             break
             
         case .STATUS:
@@ -360,6 +359,7 @@ class CoursesViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func setUpUI(){
+        
         StaticHelper.sharedInstance.startLoader(view: view)
         
         getCourses()
@@ -400,8 +400,7 @@ class CoursesViewController: UIViewController,UITableViewDelegate,UITableViewDat
     func didSelectRow(selectedRowIndex: NSInteger){
         
         if selectedRowIndex == 0 {
-            
-            
+        
         }
         else if selectedRowIndex == 8 {
             

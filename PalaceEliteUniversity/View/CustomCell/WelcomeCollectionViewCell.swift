@@ -20,6 +20,8 @@ class WelcomeCollectionViewCell: UICollectionViewCell {
         lblHeader.font = UIFont.getCustomFont_ForSize(size: 21)
         lblDesc.font = UIFont.getCustomFont_ForSize(size: 13)
         
+        btnGetStarted.titleLabel?.font = UIFont.getCustomFont_ForSize(size: 11)
+        
         
     }
 }

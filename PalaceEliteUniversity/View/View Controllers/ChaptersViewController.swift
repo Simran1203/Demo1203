@@ -25,7 +25,6 @@ class ChaptersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         getChapters()
     }
     

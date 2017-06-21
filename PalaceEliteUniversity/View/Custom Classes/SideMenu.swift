@@ -57,8 +57,8 @@ class SideMenu: UIView, UITableViewDelegate, UITableViewDataSource  {
         popUpTable.consMenuViewWidth.constant = popUpTable.widthViewMenu
         popUpTable.viewMenu.frame = CGRect(x: -popUpTable.widthViewMenu, y: 0, width: popUpTable.widthViewMenu, height: popUpTable.frame.size.height)
         
-        let decoded  = UserDefaults.standard.object(forKey: "userData") as! Data
-        let user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+        let decodedUserData  = UserDefaults.standard.object(forKey: "userData") as! Data
+        let user = NSKeyedUnarchiver.unarchiveObject(with: decodedUserData) as! User
         
         popUpTable.imgUser.af_setImage(withURL: URL(string:user.avatar)!, placeholderImage: UIImage(named:"userIcon"), filter: nil, progress: nil, progressQueue: .main, imageTransition: .noTransition, runImageTransitionIfCached: false, completion: nil)
         
@@ -66,6 +66,11 @@ class SideMenu: UIView, UITableViewDelegate, UITableViewDataSource  {
         popUpTable.lblPoints.text = user.level
         popUpTable.lblStars.text = user.points
         popUpTable.lblBadges.text = "\(user.badges.count)"
+        
+        
+        popUpTable.lblPoints.font = UIFont.getCustomFont_ForSize(size: 13.0)
+        popUpTable.lblStars.font = UIFont.getCustomFont_ForSize(size: 13.0)
+        popUpTable.lblBadges.font = UIFont.getCustomFont_ForSize(size: 13.0)
         
         return popUpTable
         

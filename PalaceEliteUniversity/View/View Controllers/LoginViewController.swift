@@ -70,8 +70,8 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
     ///*******************************************************
     // MARK: - API Methods
     ///*******************************************************
+    
     func signIn(){
-        
         txtUserName.resignFirstResponder()
         txtPassword.resignFirstResponder()
         
@@ -135,7 +135,6 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
             UserDefaults.standard.set(txtUserName.text!, forKey: "userName")
         }
         
-        
         if (txtUserName.text?.characters.count)! > 0 && (txtPassword.text?.characters.count)! > 0{
             StaticHelper.sharedInstance.startLoader(view: view)
             
@@ -193,7 +192,6 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
         // Set Font
         lblSaveUsername.font = UIFont.getCustomFont_ForSize(size: 9.0)
         btnForgetCredentials.titleLabel?.font = UIFont.getCustomFont_ForSize(size: 10.0)
-        
         
         txtUserName.font = UIFont.getCustomFont_ForSize(size: 10.0)
         txtPassword.font = UIFont.getCustomFont_ForSize(size: 10.0)

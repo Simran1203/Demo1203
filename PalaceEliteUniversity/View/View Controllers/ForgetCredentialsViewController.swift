@@ -41,14 +41,9 @@ class ForgetCredentialsViewController: UIViewController,UIGestureRecognizerDeleg
         updateUI()
         
         //Tap on Screen hides keyboard
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
-        
-        
-        
-        
         
     }
     

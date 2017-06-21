@@ -258,25 +258,23 @@ class AccountViewController: UIViewController,UICollectionViewDataSource,UIColle
     ///*******************************************************
     
     func setUpUI(){
+        
         title = "My account"
         
         navigationItem.leftBarButtonItem = StaticHelper.sharedInstance.leftNavigationBarButton("down_arrow", viewController: self)
-        
         navigationItem.rightBarButtonItem = StaticHelper.sharedInstance.rightNavigationBarButton("send_icon", viewController: self)
-        
         
         // Set up Font
         lblUserName.font = UIFont.getCustomFont_ForSize(size: 15.0)
         lblUserEmail.font = UIFont.getCustomFont_ForSize(size: 15.0)
-        
         lblNotStarted.font = UIFont.getCustomFont_ForSize(size: 9.0)
         lblCompleted.font = UIFont.getCustomFont_ForSize(size: 9.0)
         lblInProgress.font = UIFont.getCustomFont_ForSize(size: 9.0)
         btnOpenPortal.titleLabel?.font = UIFont.getCustomFont_ForSize(size: 13.0)
         
-        
-        let decoded  = UserDefaults.standard.object(forKey: "userData") as! Data
-        user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+
+        let decodedUserData = UserDefaults.standard.object(forKey: "userData") as! Data
+        user = NSKeyedUnarchiver.unarchiveObject(with: decodedUserData) as! User
         
         
         lblUserName.text = user.firstName + " " + user.lastName
@@ -287,15 +285,13 @@ class AccountViewController: UIViewController,UICollectionViewDataSource,UIColle
         collectionView.reloadData()
         
         let decoded1  = UserDefaults.standard.object(forKey: "courseData") as! Data
-        let arr = NSKeyedUnarchiver.unarchiveObject(with: decoded1) as! [Courses]
+        let arrStatus = NSKeyedUnarchiver.unarchiveObject(with: decoded1) as! [Courses]
         
-        //print(arr[0].name)
-        
-        if arr.count > 0 {
-            count1 = Float(arr.filter{$0.completionStatus == "not_attempted"}.count)
-            count2 = Float(arr.filter{$0.completionStatus == "incomplete"}.count)
-            count3 = Float(arr.filter{$0.completionStatus == "complete"}.count)
-            totalCount = Float(arr.count)
+        if arrStatus.count > 0 {
+            count1 = Float(arrStatus.filter{$0.completionStatus == "not_attempted"}.count)
+            count2 = Float(arrStatus.filter{$0.completionStatus == "incomplete"}.count)
+            count3 = Float(arrStatus.filter{$0.completionStatus == "complete"}.count)
+            totalCount = Float(arrStatus.count)
         }
         else{
             count1 = 1.0

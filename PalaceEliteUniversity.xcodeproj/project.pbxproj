@@ -462,7 +462,7 @@
 					B1F23A0E1EE52AB8006A3643 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = C6236H47K4;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					B1F23A221EE52ABB006A3643 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -801,7 +801,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "041542d9-c581-4cb9-bac5-5b31fb407149";
+				PROVISIONING_PROFILE = "815afc24-1557-4703-b913-ad7cfe8df8e1";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -847,7 +847,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "041542d9-c581-4cb9-bac5-5b31fb407149";
+				PROVISIONING_PROFILE = "815afc24-1557-4703-b913-ad7cfe8df8e1";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
@@ -860,15 +860,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Simran Kaur (2NM7LKZ7T7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Simran Kaur (2NM7LKZ7T7)";
+				DEVELOPMENT_TEAM = C6236H47K4;
 				INFOPLIST_FILE = PalaceEliteUniversity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.agicent.generic.Palace;
+				PRODUCT_BUNDLE_IDENTIFIER = com.agicent.PalaceElite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "815afc24-1557-4703-b913-ad7cfe8df8e1";
+				PROVISIONING_PROFILE_SPECIFIER = dev_PalaceElite;
 				SWIFT_OBJC_BRIDGING_HEADER = "PalaceEliteUniversity-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -881,15 +881,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Simran Kaur (2NM7LKZ7T7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Simran Kaur (2NM7LKZ7T7)";
+				DEVELOPMENT_TEAM = C6236H47K4;
 				INFOPLIST_FILE = PalaceEliteUniversity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.agicent.generic.Palace;
+				PRODUCT_BUNDLE_IDENTIFIER = com.agicent.PalaceElite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "815afc24-1557-4703-b913-ad7cfe8df8e1";
+				PROVISIONING_PROFILE_SPECIFIER = dev_PalaceElite;
 				SWIFT_OBJC_BRIDGING_HEADER = "PalaceEliteUniversity-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
