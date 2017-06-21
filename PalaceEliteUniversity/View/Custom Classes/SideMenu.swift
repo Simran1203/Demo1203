@@ -67,7 +67,7 @@ class SideMenu: UIView, UITableViewDelegate, UITableViewDataSource  {
         popUpTable.lblStars.text = user.points
         popUpTable.lblBadges.text = "\(user.badges.count)"
         
-        
+        popUpTable.lblName.font = UIFont.getCustomFont_ForSize(size: 14.0)
         popUpTable.lblPoints.font = UIFont.getCustomFont_ForSize(size: 13.0)
         popUpTable.lblStars.font = UIFont.getCustomFont_ForSize(size: 13.0)
         popUpTable.lblBadges.font = UIFont.getCustomFont_ForSize(size: 13.0)

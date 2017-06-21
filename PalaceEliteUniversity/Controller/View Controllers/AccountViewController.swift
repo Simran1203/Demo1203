@@ -11,16 +11,16 @@ import Alamofire
 import AlamofireImage
 
 class AccountViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,ARPieChartDelegate, ARPieChartDataSource {
-
-     // MARK: - Outlets
+    
+    // MARK: - Outlets
     @IBOutlet var imgUser: UIImageView!
     @IBOutlet var lblUserName: UILabel!
     @IBOutlet var lblUserEmail: UILabel!
-    @IBOutlet var lblVersion: UILabel!
-    @IBOutlet var lblWifiDownloadOnly: UILabel!
-    @IBOutlet var btnClearDatabase: UIButton!
-    @IBOutlet var switcherWifi: UISwitch!
+    @IBOutlet var lblNotStarted: UILabel!
+    @IBOutlet var lblInProgress: UILabel!
+    @IBOutlet var lblCompleted: UILabel!
     @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var btnOpenPortal: UIButton!
     @IBOutlet var pieChart: ARPieChart!
     
     
@@ -44,9 +44,9 @@ class AccountViewController: UIViewController,UICollectionViewDataSource,UIColle
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -59,7 +59,7 @@ class AccountViewController: UIViewController,UICollectionViewDataSource,UIColle
     ///*******************************************************
     func tapLeftBarButton(_ sender:UIButton)  {
         
-       _ = navigationController?.dismiss(animated: true, completion: nil)
+        _ = navigationController?.dismiss(animated: true, completion: nil)
     }
     
     func tapRightBarButton(_ sender:UIButton)  {
@@ -84,24 +84,24 @@ class AccountViewController: UIViewController,UICollectionViewDataSource,UIColle
         
     }
     
- 
+    
     
     fileprivate func updatePieChart() {
-        pieChart.innerRadius = CGFloat(36)
-        pieChart.outerRadius = CGFloat(46)
+        pieChart.innerRadius = CGFloat((36.0/320.0) * UIScreen.main.bounds.width)
+        pieChart.outerRadius = CGFloat((46.0/320.0) * UIScreen.main.bounds.width)
         pieChart.selectedPieOffset = CGFloat(17.4011307)
         pieChart.reloadData()
     }
-  
+    
     ///*******************************************************
     // MARK: - ARPieChartDelegate Methods
     ///*******************************************************
     func pieChart(_ pieChart: ARPieChart, itemSelectedAtIndex index: Int) {
-      
+        
     }
     
     func pieChart(_ pieChart: ARPieChart, itemDeselectedAtIndex index: Int) {
-       
+        
     }
     
     ///*******************************************************
@@ -149,23 +149,24 @@ class AccountViewController: UIViewController,UICollectionViewDataSource,UIColle
         var val = String()
         
         if index == 0 {
-            val = "\(CGFloat((count1 * 100)/totalCount))%"
+            val = String(format: "%.1f",CGFloat((count1 * 100)/totalCount)) + "%"
         }
         else if index == 1 {
-            val = "\(CGFloat((count2 * 100)/totalCount))%"
+            val = String(format: "%.1f",CGFloat((count2 * 100)/totalCount)) + "%"
         }
         else if index == 2 {
-            val = "\(CGFloat((count3 * 100)/totalCount))%"
+            val = String(format: "%.1f",CGFloat((count3 * 100)/totalCount)) + "%"
         }
-
+        
+        
         return val
     }
-
+    
     
     ///*******************************************************
     // MARK: - UICollection View Methods
     ///*******************************************************
-
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -177,7 +178,7 @@ class AccountViewController: UIViewController,UICollectionViewDataSource,UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AccountCell", for: indexPath) as! AccountCell
+        let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: "AccountCell", for: indexPath) as! AccountCell
         
         if indexPath.item == 0 {
             cell.lblNumber.text = user.points
@@ -197,6 +198,7 @@ class AccountViewController: UIViewController,UICollectionViewDataSource,UIColle
         
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         var height = CGFloat()
@@ -232,13 +234,13 @@ class AccountViewController: UIViewController,UICollectionViewDataSource,UIColle
             case .success(_):
                 if response.result.value != nil{
                     UserCache.sharedInstance.clearUserData()
-                  
+                    
                     StaticHelper.sharedInstance.stopLoader()
                     
                     let vc : LogoutViewController = self.storyboard?.instantiateViewController(withIdentifier: "LogoutVC") as! LogoutViewController
                     
                     self.navigationController?.pushViewController(vc, animated: true)
-                 
+                    
                     
                 }
                 break
@@ -257,7 +259,7 @@ class AccountViewController: UIViewController,UICollectionViewDataSource,UIColle
     ///*******************************************************
     // MARK: - Private Methods
     ///*******************************************************
-
+    
     func setUpUI(){
         title = "My account"
         
@@ -267,12 +269,17 @@ class AccountViewController: UIViewController,UICollectionViewDataSource,UIColle
         
         
         // Set up Font
-        lblUserName.font = UIFont.getCustomFont_ForSize(size: 15)
-        lblUserEmail.font = UIFont.getCustomFont_ForSize(size: 15)
-
+        lblUserName.font = UIFont.getCustomFont_ForSize(size: 15.0)
+        lblUserEmail.font = UIFont.getCustomFont_ForSize(size: 15.0)
         
-        let decoded  = UserDefaults.standard.object(forKey: "userData") as! Data
-        user = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! User
+        lblNotStarted.font = UIFont.getCustomFont_ForSize(size: 9.0)
+        lblCompleted.font = UIFont.getCustomFont_ForSize(size: 9.0)
+        lblInProgress.font = UIFont.getCustomFont_ForSize(size: 9.0)
+        btnOpenPortal.titleLabel?.font = UIFont.getCustomFont_ForSize(size: 13.0)
+        
+        
+        let decodedUserData  = UserDefaults.standard.object(forKey: "userData") as! Data
+        user = NSKeyedUnarchiver.unarchiveObject(with: decodedUserData) as! User
         
         
         lblUserName.text = user.firstName + " " + user.lastName
@@ -282,8 +289,10 @@ class AccountViewController: UIViewController,UICollectionViewDataSource,UIColle
         
         collectionView.reloadData()
         
-        let decoded1  = UserDefaults.standard.object(forKey: "courseData") as! Data
-        let arr = NSKeyedUnarchiver.unarchiveObject(with: decoded1) as! [Courses]
+        let decodedCoursesData = UserDefaults.standard.object(forKey: "courseData") as! Data
+        let arr = NSKeyedUnarchiver.unarchiveObject(with: decodedCoursesData) as! [Courses]
+        
+        //print(arr[0].name)
         
         if arr.count > 0 {
             count1 = Float(arr.filter{$0.completionStatus == "not_attempted"}.count)
@@ -298,16 +307,12 @@ class AccountViewController: UIViewController,UICollectionViewDataSource,UIColle
             totalCount = 1.0
         }
         
-        print(count1)
-        print(count2)
-        print(count3)
-        
         pieChart.delegate = self
         pieChart.dataSource = self
         pieChart.showDescriptionText = true
         
         updatePieChart()
         
-
+        
     }
 }

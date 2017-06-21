@@ -269,7 +269,6 @@ class CoursesViewController: UIViewController,UITableViewDelegate,UITableViewDat
             
         case .NAME:
             arrFilteredCourses = arrCourses
-            
             break
             
         case .DATE:

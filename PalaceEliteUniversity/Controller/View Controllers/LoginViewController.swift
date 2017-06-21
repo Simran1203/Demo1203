@@ -10,14 +10,15 @@ import UIKit
 import Alamofire
 
 class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
-
-   // MARK: - Outlets
+    
+    // MARK: - Outlets
     @IBOutlet var txtUserName: UITextField!
     @IBOutlet var txtPassword: UITextField!
     @IBOutlet var transparentView: UIView!
     @IBOutlet var switcherUsername: UISwitch!
     @IBOutlet var indicator: UIActivityIndicatorView!
     @IBOutlet var lblSaveUsername: UILabel!
+    @IBOutlet var btnForgetCredentials: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +31,7 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
             if name.characters.count > 0 {
                 txtUserName.text = UserDefaults.standard.object(forKey: "userName") as? String
             }
-           
+            
         }
         
         //Tap on Screen hides keyboard
@@ -39,7 +40,8 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
         tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
         
-
+        
+        
         
     }
     
@@ -48,7 +50,7 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-   
+    
     ///*******************************************************
     // MARK: - UITextField Delegate Methods
     ///*******************************************************
@@ -61,12 +63,13 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
     ///*******************************************************
     // MARK: - UITextField Private Methods
     ///*******************************************************
-
+    
     func handleTap(gesture: UITapGestureRecognizer) {
         
         txtPassword.resignFirstResponder()
         txtUserName.resignFirstResponder()
     }
+    
     
     ///*******************************************************
     // MARK: - API Methods
@@ -83,26 +86,26 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
         
         
         let dict : [String:String] =
-        ["login":txtUserName.text!,"password":txtPassword.text!,"logout_redirect":"talentlms.com"]
+            ["login":txtUserName.text!,"password":txtPassword.text!,"logout_redirect":"talentlms.com"]
         
         Alamofire.request(URL(string: baseURL + "userlogin")!, method: .post, parameters: dict,  headers: nil).authenticate(user: apiKey, password: "").responseJSON { (response:DataResponse<Any>) in
             
             switch(response.result) {
             case .success(_):
                 if response.result.value != nil{
+                    StaticHelper.sharedInstance.stopLoader()
                     
                     let dict : [String:Any] = response.result.value as! [String:Any]
-                
+                    
                     if let val : [String:Any] = dict["error"] as? [String : Any]{
                         
-                        self.indicator.isHidden = true
                         
-                         StaticHelper.sharedInstance.showAlertViewWithTitle("", message: val["message"] as! String, buttonTitles: ["OK"], viewController: self, completion: nil)
+                        StaticHelper.sharedInstance.showAlertViewWithTitle("", message: val["message"] as! String, buttonTitles: ["OK"], viewController: self, completion: nil)
                     }
                     else{
                         UserCache.sharedInstance.saveUserData(dict)
                         
-                       self.indicator.isHidden = true
+                        
                         
                         let navVC : UINavigationController = self.storyboard?.instantiateViewController(withIdentifier: "HomeNavController") as! UINavigationController
                         
@@ -112,11 +115,12 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
                         
                         self.navigationController?.present(navVC, animated: false, completion: nil)
                     }
-              
+                    
                 }
                 break
                 
             case .failure(_):
+                StaticHelper.sharedInstance.stopLoader()
                 print(response.result.error ?? "")
                 break
                 
@@ -138,8 +142,11 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
         
         if (txtUserName.text?.characters.count)! > 0 && (txtPassword.text?.characters.count)! > 0{
             
-            indicator.isHidden = false
-            indicator.startAnimating()
+            //            indicator.isHidden = false
+            //            indicator.startAnimating()
+            
+            StaticHelper.sharedInstance.startLoader(view: view)
+            
             signIn()
         }
         else{
@@ -150,7 +157,7 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
     
     @IBAction func btnForgotTapped(_ sender: UIButton) {
         
-        let vc : ForgetCredentialsViewController = storyboard?.instantiateViewController(withIdentifier: "ForgetCredentialsVC") as! ForgetCredentialsViewController
+        let vc : ForgetCredentialsViewController = self.storyboard?.instantiateViewController(withIdentifier: "ForgetCredentialsVC") as! ForgetCredentialsViewController
         navigationController?.pushViewController(vc, animated: true)
         
     }
@@ -161,7 +168,7 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
             
             switcherUsername.setOn(false, animated: true)
             UserDefaults.standard.set("", forKey: "userName")
-
+            
         }
         else{
             switcherUsername.setOn(true, animated: true)
@@ -176,11 +183,11 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
     
     func setUpUI(){
         
-        txtUserName.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName: UIColor(red: (4.0/255.0), green: (220.0/255.0), blue: (244.0/255.0), alpha: 1.0)])
+        txtUserName.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName: UIColor(red: (4.0/255.0), green: (220.0/255.0), blue: (244.0/255.0), alpha: 1.0),NSFontAttributeName:UIFont.getCustomFont_ForSize(size: 10.0)])
         txtUserName.textColor = UIColor(red: (4.0/255.0), green: (220.0/255.0), blue: (244.0/255.0), alpha: 1.0)
         txtUserName.tintColor = .white
         
-        txtPassword.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName: UIColor(red: (4.0/255.0), green: (220.0/255.0), blue: (244.0/255.0), alpha: 1.0)])
+        txtPassword.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName: UIColor(red: (4.0/255.0), green: (220.0/255.0), blue: (244.0/255.0), alpha: 1.0),NSFontAttributeName:UIFont.getCustomFont_ForSize(size: 10.0)])
         txtPassword.textColor = UIColor(red: (4.0/255.0), green: (220.0/255.0), blue: (244.0/255.0), alpha: 1.0)
         txtPassword.tintColor = .white
         
@@ -192,9 +199,13 @@ class LoginViewController: UIViewController,UIGestureRecognizerDelegate {
         indicator.isHidden = true
         
         // Set Font
-        lblSaveUsername.font = UIFont.systemFont(ofSize: 9)
+        lblSaveUsername.font = UIFont.getCustomFont_ForSize(size: 9.0)
+        btnForgetCredentials.titleLabel?.font = UIFont.getCustomFont_ForSize(size: 10.0)
         
-
+        
+        txtUserName.font = UIFont.getCustomFont_ForSize(size: 10.0)
+        txtPassword.font = UIFont.getCustomFont_ForSize(size: 10.0)
+        
     }
     
 }
