@@ -16,58 +16,71 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        //Setting up Navigation Bar
+        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
         
-        
+        //Get first VC
         if StaticHelper.isObjectNotNil(object: UserDefaults.standard.integer(forKey: "launchCount") as AnyObject!){
             
-            let currentCount = UserDefaults.standard.integer(forKey: "launchCount")
-            UserDefaults.standard.set(currentCount+1, forKey: "launchCount")
+            let count = UserDefaults.standard.integer(forKey: "launchCount")
+            UserDefaults.standard.set(count+1, forKey: "launchCount")
+            UserDefaults.standard.synchronize()
+        }
+        else {
+            UserDefaults.standard.set(1, forKey: "launchCount")
             UserDefaults.standard.synchronize()
         }
         
+        
         let currentCount = UserDefaults.standard.integer(forKey: "launchCount")
         
-        let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let navController: UINavigationController = storyBoard.instantiateViewController(withIdentifier: "LoginNav") as! UINavigationController
-       
+        
         if currentCount == 1 {
             
             let vc: WelcomeViewController = storyBoard.instantiateViewController(withIdentifier: "WelcomeVC") as! WelcomeViewController
             
-            //let nav = UINavigationController(rootViewController: vc)
-            
-            
             navController.viewControllers = [vc]
+            
+            // navController = UINavigationController(rootViewController: vc)
             
             let window: UIWindow = StaticHelper.sharedInstance.mainWindow()
             window.rootViewController = navController
-
+            window.makeKeyAndVisible()
+            
             
         }
         else{
             
             if StaticHelper.isObjectNotNil(object: UserDefaults.standard.object(forKey: "userId") as AnyObject!){
-               
+                
                 let navController2 : UINavigationController = storyBoard.instantiateViewController(withIdentifier: "HomeNavController") as! UINavigationController
                 
                 let vc: CoursesViewController = storyBoard.instantiateViewController(withIdentifier: "CoursesVC") as! CoursesViewController
                 
-               navController2.viewControllers = [vc]
+                navController2.viewControllers = [vc]
+                
+                //navController2 = UINavigationController(rootViewController: vc)
                 
                 let window: UIWindow = StaticHelper.sharedInstance.mainWindow()
                 window.rootViewController = navController2
-
+                window.makeKeyAndVisible()
             }
-            
+                
             else{
                 
                 let vc: LoginViewController = storyBoard.instantiateViewController(withIdentifier: "LoginVC") as! LoginViewController
                 
                 navController.viewControllers = [vc]
+                //navController = UINavigationController(rootViewController: vc)
+                
                 
                 let window: UIWindow = StaticHelper.sharedInstance.mainWindow()
                 window.rootViewController = navController
+                window.makeKeyAndVisible()
                 
             }
         }

@@ -11,20 +11,22 @@ import UIKit
 class CoursesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var imgCourse: UIImageView!
-    @IBOutlet var lblName: UILabel!
-    @IBOutlet var lblHeading: UILabel!
+    @IBOutlet var lblTitle: UILabel!
+    @IBOutlet var lblType: UILabel!
+    @IBOutlet var lblLoc: UILabel!
     @IBOutlet var lblProgress: UILabel!
-    
+    @IBOutlet var trackView: UIView!
+    @IBOutlet var highlightedView: UIView!
+    @IBOutlet var consCHighlightedView: NSLayoutConstraint!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        lblType.font = UIFont.getCustomFont_ForSize(size: 14)
+        lblLoc.font = UIFont.getCustomFont_ForSize(size:13)
+        lblProgress.font = UIFont.getCustomFont_ForSize(size: 13)
+        lblTitle.font = UIFont.getCustomMediumFont_ForSize(size: 14)
     }
-
-    
-    
-    
-    
     
 }

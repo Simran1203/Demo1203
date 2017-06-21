@@ -8,8 +8,8 @@
 
 import UIKit
 
-class Courses: NSObject {
-
+class Courses: NSObject,NSCoding {
+    
     var id = String()
     var name = String()
     var code = String()
@@ -37,9 +37,33 @@ class Courses: NSObject {
     var enrolledOnTime = String()
     var completedOnTime = String()
     var completionStatus = String()
-    var completionPercentage = String()
+    var completionPercentage = Int()
     var expiredOn = String()
     var expiredOnTime = String()
     var totalTime = String()
+    
+    
+    override init() {
+        super.init()
+        
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        
+        name = aDecoder.decodeObject(forKey: "name") as! String
+        completionStatus = aDecoder.decodeObject(forKey: "completion_status") as! String
+        
+        
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        
+        aCoder.encode(name, forKey: "name")
+        aCoder.encode(completionStatus, forKey: "completion_status")
+        
+        
+    }
+    
+    
     
 }

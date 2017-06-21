@@ -86,7 +86,7 @@ open class ARPieChart: UIView {
     open var selectedPieOffset: CGFloat = 0.0
     
     /// Font of layer's description text
-    open var labelFont: UIFont = UIFont.systemFont(ofSize: 10)
+    open var labelFont: UIFont = UIFont.getCustomFont_ForSize(size: 10.0)
     
     open var showDescriptionText: Bool = false
     

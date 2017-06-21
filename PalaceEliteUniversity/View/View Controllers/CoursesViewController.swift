@@ -146,7 +146,7 @@ class CoursesViewController: UIViewController,UITableViewDelegate,UITableViewDat
     ///*******************************************************
     // MARK: - Navigation Bar Buttons Action  Methods
     ///*******************************************************
-
+    
     func tapLeftBarButton(_ sender:UIButton)  {
         
         view.endEditing(true)
@@ -258,7 +258,7 @@ class CoursesViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }
         
     }
-  
+    
     ///*******************************************************
     // MARK: - Delegate Methods (Sort)
     ///*******************************************************
@@ -301,16 +301,16 @@ class CoursesViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let text: NSString = (textField.text ?? "") as NSString
         let resultString = text.replacingCharacters(in: range, with: string)
         
-       // let rightBarButton : UIBarButtonItem = StaticHelper.sharedInstance.placeCrossBarButtonWithImage(imageName: "close_icon", vc: self)
+        // let rightBarButton : UIBarButtonItem = StaticHelper.sharedInstance.placeCrossBarButtonWithImage(imageName: "close_icon", vc: self)
         
         filterSearchFor(str: resultString)
         
         //if resultString.characters.count > 0 {
-           // navigationItem.rightBarButtonItem = rightBarButton
-//        }
-//        else{
-//            navigationItem.rightBarButtonItem = nil
-//        }
+        // navigationItem.rightBarButtonItem = rightBarButton
+        //        }
+        //        else{
+        //            navigationItem.rightBarButtonItem = nil
+        //        }
         
         return true
     }
@@ -432,15 +432,26 @@ class CoursesViewController: UIViewController,UITableViewDelegate,UITableViewDat
             case .success(_):
                 if response.result.value != nil{
                     
+                    StaticHelper.sharedInstance.stopLoader()
+                    
                     let dict : [String:Any] = response.result.value as! [String:Any]
                     
-                    self.parseResponseUser(dict : dict)
-                    
-                    let arrCourses = dict["courses"] as! [Any]
-                    
-                    self.parseResponseToCourse(arr: arrCourses)
-                    
-                    self.getAllCourses()
+                    if let val : [String:Any] = dict["error"] as? [String : Any]{
+                        
+                        StaticHelper.sharedInstance.showAlertViewWithTitle("", message: val["message"] as! String, buttonTitles: ["OK"], viewController: self, completion:  { (index) in
+                            
+                            _ = self.navigationController?.popViewController(animated: true)
+                        })
+                    }else{
+                        
+                        self.parseResponseUser(dict : dict)
+                        
+                        let arrCourses = dict["courses"] as! [Any]
+                        
+                        self.parseResponseToCourse(arr: arrCourses)
+                        
+                        self.getAllCourses()
+                    }
                 }
                 break
                 
@@ -551,11 +562,7 @@ class CoursesViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }
         
     }
-    
-    
-    
-    
-    
+
     func parseResponseUser(dict : [String: Any]){
         let user = User()
         
@@ -898,12 +905,11 @@ class CoursesViewController: UIViewController,UITableViewDelegate,UITableViewDat
             }
             
             arrAllCourses.append(course)
-            
-            
+    
         }
         
     }
-    
+
     func logoutUser(){
         
         if !StaticHelper.sharedInstance.checkNetworkStatus() {
@@ -925,7 +931,6 @@ class CoursesViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     let vc : LogoutViewController = self.storyboard?.instantiateViewController(withIdentifier: "LogoutVC") as! LogoutViewController
                     
                     self.navigationController?.pushViewController(vc, animated: true)
-                    
                     
                 }
                 break

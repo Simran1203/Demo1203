@@ -13,4 +13,12 @@ class AccountCell: UICollectionViewCell {
     @IBOutlet var lblNumber: UILabel!
     @IBOutlet var lblParameter: UILabel!
     
+    @IBOutlet var verticalLine: UIView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        lblParameter.font = UIFont.getCustomFont_ForSize(size: 10)
+        lblNumber.font = UIFont.getCustomBoldFont_ForSize(size: 18)
+    }
 }

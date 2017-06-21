@@ -24,13 +24,15 @@ class SideOptionsPopUp: UIView, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var consTrailingIphone: NSLayoutConstraint!
+    @IBOutlet var consTrailingIpad: NSLayoutConstraint!
     var shapeLayer = CAShapeLayer()
     
     var frameMenuButton = CGRect()
     
     weak var optionSelected: OptionSelected?
     
-    let HEIGHT_TABLEVIEW_CELL: CGFloat = 36.0
+    let HEIGHT_TABLEVIEW_CELL: CGFloat = 38.0
     
     let arrLabels: Array = ["NAME", "DATE", "STATUS"]
     //let arrImages: Array = ["what's_on_icon", "all_deals_icon", "suggest_venue_icon", "settings_icon"]
@@ -61,48 +63,65 @@ class SideOptionsPopUp: UIView, UITableViewDataSource, UITableViewDelegate {
         
         self.frame = window.frame;
         
-        let viewHeight = (200/568.0) * UIScreen.main.bounds.height
+        let viewHeight = (116/568.0) * UIScreen.main.bounds.height
         let viewWidth = (120/320.0) * UIScreen.main.bounds.width
         
+        if UIScreen.main.bounds.height == 1024.0 || UIScreen.main.bounds.height == 1366.0{
+            //constraintTrailing.constant = 0
+            consTrailingIpad.isActive = true
+            consTrailingIphone.isActive = false
+            
+        }else{
+            //constraintTrailing.constant = (275.0/320) * UIScreen.main.bounds.width
+            consTrailingIpad.isActive = false
+            consTrailingIphone.isActive = true
+        }
+        self.layoutIfNeeded()
         
         window.addSubview(self)
         
-        let path = CGMutablePath()
         
-        let imageMenu = UIImage(named: "menu_icon")
-        let widthImage = frameMenuButton.size.width
-        
-        let arrowWidth = (12/320.0) * UIScreen.main.bounds.width
-        let arrowHeight = (8/568.0) * UIScreen.main.bounds.height
-        
-        path.move(to: CGPoint(x: CGFloat(0.0), y: CGFloat(arrowHeight)), transform: .identity)
-        path.addLine(to: CGPoint(x: CGFloat(viewWidth - (widthImage + 20) + widthImage/2.0), y: CGFloat(arrowHeight)), transform: .identity)
-        path.addLine(to: CGPoint(x: CGFloat(viewWidth - (widthImage + 20) + widthImage/2.0 + arrowWidth/2.0), y: CGFloat(0.0)), transform: .identity)
-        path.addLine(to: CGPoint(x: CGFloat(viewWidth - (widthImage + 20) + widthImage/2.0 + arrowWidth), y: CGFloat(arrowHeight)), transform: .identity)
-        path.addLine(to: CGPoint(x: CGFloat(viewWidth), y: CGFloat(arrowHeight)), transform: .identity)
-        path.addLine(to: CGPoint(x: CGFloat(viewWidth), y: CGFloat(viewHeight)), transform: .identity)
-        
-        path.addLine(to: CGPoint(x: CGFloat(0.0), y: CGFloat(viewHeight)), transform: .identity)
-        path.addLine(to: CGPoint(x: CGFloat(0.0), y: CGFloat(arrowHeight)), transform: .identity)
-        
-        //shapeLayer.removeFromSuperlayer()
-        
-        shapeLayer = CAShapeLayer()
-        shapeLayer.path = path
-        shapeLayer.fillColor = UIColor.brown.cgColor
-        shapeLayer.bounds = CGRect(x: CGFloat(0.0), y: CGFloat(0.0), width: CGFloat(viewWidth), height: CGFloat(viewHeight))
-        shapeLayer.anchorPoint = CGPoint(x: 0.0, y: 0.0)
-        shapeLayer.position = CGPoint(x: 0.0, y: 0.0)
-        
-        
-        // CGPathRelease(path)
-        
-        sideView.layer .insertSublayer(shapeLayer, at: 0)
-        
+        if UIScreen.main.bounds.height == 1024.0 || UIScreen.main.bounds.height == 1366.0{
+            
+            
+        }else{
+            
+            let path = CGMutablePath()
+            
+            let arrowWidth = (12/320.0) * UIScreen.main.bounds.width
+            let arrowHeight = (8/568.0) * UIScreen.main.bounds.height
+            
+            path.move(to: CGPoint(x: CGFloat(0.0), y: CGFloat(arrowHeight)), transform: .identity)
+            
+            path.addLine(to: CGPoint(x: CGFloat(viewWidth/2.0 - arrowWidth/2.0), y: CGFloat(arrowHeight)), transform: .identity)
+            path.addLine(to: CGPoint(x: CGFloat(viewWidth/2.0), y: CGFloat(0.0)), transform: .identity)
+            path.addLine(to: CGPoint(x: CGFloat(viewWidth/2.0 + arrowWidth/2.0), y: CGFloat(arrowHeight)), transform: .identity)
+            path.addLine(to: CGPoint(x: CGFloat(viewWidth), y: CGFloat(arrowHeight)), transform: .identity)
+            path.addLine(to: CGPoint(x: CGFloat(viewWidth), y: CGFloat(viewHeight)), transform: .identity)
+            
+            path.addLine(to: CGPoint(x: CGFloat(0.0), y: CGFloat(viewHeight)), transform: .identity)
+            path.addLine(to: CGPoint(x: CGFloat(0.0), y: CGFloat(arrowHeight)), transform: .identity)
+            
+            
+            //shapeLayer.removeFromSuperlayer()
+            
+            shapeLayer = CAShapeLayer()
+            shapeLayer.path = path
+            shapeLayer.fillColor = UIColor(red: (2.0/255.0), green: (112.0/255.0), blue: (120.0/255.0), alpha: 1.0).cgColor
+            shapeLayer.bounds = CGRect(x: CGFloat(0.0), y: CGFloat(0.0), width: CGFloat(viewWidth), height: CGFloat(viewHeight))
+            shapeLayer.anchorPoint = CGPoint(x: 0.0, y: 0.0)
+            shapeLayer.position = CGPoint(x: 0.0, y: 0.0)
+            
+            
+            // CGPathRelease(path)
+            
+            sideView.layer .insertSublayer(shapeLayer, at: 0)
+            
+            
+        }
         
         
     }
-    
     func dismiss()  {
         self.removeFromSuperview()
     }
@@ -125,6 +144,14 @@ class SideOptionsPopUp: UIView, UITableViewDataSource, UITableViewDelegate {
         let sideOptionCell = tableView.dequeueReusableCell(withIdentifier: "SideOptionCell") as! SideOptionCell
         
         sideOptionCell.lblCell.text = arrLabels[indexPath.row]
+        
+        
+        if indexPath.row < 2 {
+            sideOptionCell.underLine.isHidden = false
+        }
+        else{
+            sideOptionCell.underLine.isHidden = true
+        }
         
         return sideOptionCell
     }

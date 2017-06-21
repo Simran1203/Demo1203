@@ -14,11 +14,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>LinearProgressBar.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-PalaceEliteUniversity.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,11 +37,6 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>128C5D8103985ABDBAC44196C43F1201</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
 		<dict>
 			<key>primary</key>
@@ -57,7 +47,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C9430914E213CB017D5E5805ACEF8FA1</key>
+		<key>E232D21E6663589A7E1D0F3418708152</key>
 		<dict>
 			<key>primary</key>
 			<true/>
