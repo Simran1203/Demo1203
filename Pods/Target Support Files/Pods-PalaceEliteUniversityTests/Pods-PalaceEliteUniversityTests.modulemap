@@ -1,0 +1,6 @@
+framework module Pods_PalaceEliteUniversityTests {
+  umbrella header "Pods-PalaceEliteUniversityTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
